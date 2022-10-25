@@ -1,0 +1,101 @@
+
+<mat-tab-group [(selectedIndex)]="selectedPage" animationDuration="0ms" mat-align-tabs="center">
+
+    <!-- Formularz logowania -->
+
+    <mat-tab label="Logowanie">
+        <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+            <p style="text-align:center;">
+                <mat-form-field appearance="standard">
+                    <mat-label>E-mail</mat-label>
+                    <input 
+                        id="loginEmail" 
+                        type="email"
+                        formControlName="email" 
+                        matInput placeholder="E-mail"
+                    >
+                    <mat-icon *ngIf="loginForm.controls['email'].invalid || loginForm.controls['email'].value == '' && loginForm.controls['email'].touched" matSuffix>error_outline</mat-icon>
+                </mat-form-field>
+            </p>
+            <p style="text-align:center;">
+                <mat-form-field appearance="standard">
+                    <mat-label>Haslo</mat-label>
+                    <input 
+                        type="password" 
+                        id="password"
+                        formControlName="password" 
+                        matInput placeholder="Haslo"
+                    >
+                    <mat-icon *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].value == ''" matSuffix>error_outline
+                    </mat-icon>
+                    <mat-hint align="end"><a href="/forgotpassword">Zresetuj haslo</a></mat-hint>
+                </mat-form-field>
+            </p>
+            <p *ngIf="loginResponse != ''" style="text-align: center;">
+                {{loginResponse}}
+            </p>
+            <p style="text-align:center">
+                <button mat-raised-button color="primary">Zaloguj</button>
+            </p>
+        </form>    
+    </mat-tab>
+
+    <!-- Formularz rejestracji  -->
+
+    <mat-tab label="Rejestracja">
+        <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+            <p style="text-align:center;">
+                <mat-form-field appearance="standard">
+                    <mat-label>E-mail</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="E-mail"
+                        formControlName="email"
+                    >
+                    <mat-icon *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" 
+                    matTooltip="Niepoprawny format e-mail!"
+                    matTooltipPosition="right"
+                    matSuffix>error_outline</mat-icon>
+                    <mat-icon *ngIf="registerForm.controls['email'].valid && registerForm.controls['email'].touched" matSuffix>check</mat-icon>
+                </mat-form-field>
+            </p>
+            <p style="text-align:center;">
+                <mat-form-field appearance="standard">
+                    <mat-label>Haslo</mat-label>
+                    <input 
+                        matInput
+                        type="password" 
+                        placeholder="Haslo"
+                        formControlName="password"
+                        
+                    >
+                    <mat-icon *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched"
+                    matTooltip="Haslo musi miec conajmniej 8 znakow, jedna wielka litere, jedna mala litere oraz jedna cyfre!"
+                    matTooltipPosition="right"
+                    matSuffix >error_outline</mat-icon>
+                    <mat-icon *ngIf="registerForm.controls['password'].valid" matSuffix>check</mat-icon>
+                    </mat-form-field>
+                    <mat-progress-bar *ngIf="registerForm.controls['password'].touched" mode="determinate" [value]="updateProgressBar()"></mat-progress-bar>
+            </p>
+            <p style="text-align:center;">
+                <mat-form-field appearance="standard">
+                    <mat-label>Powtorz haslo</mat-label>
+                    <input 
+                        matInput
+                        type="password" 
+                        placeholder="Haslo"
+                        formControlName="rPassword"
+                    >
+                    <mat-icon *ngIf="registerForm.controls['rPassword'].invalid" 
+                    matTooltip="Hasla nie sa takie same!"
+                    matTooltipPosition="right"
+                    matSuffix>error_outline</mat-icon>
+                    <mat-icon *ngIf="registerForm.controls['rPassword'].valid && registerForm.controls['rPassword'].touched && registerForm.controls['rPassword'].value != ''" matSuffix>check</mat-icon>
+                </mat-form-field>
+            </p>
+            <p style="text-align:center">
+                <button mat-raised-button color="primary">Zarejestruj</button>
+            </p>
+        </form>
+    </mat-tab>
+</mat-tab-group>
